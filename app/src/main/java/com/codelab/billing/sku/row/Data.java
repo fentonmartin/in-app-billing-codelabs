@@ -16,12 +16,13 @@
 package com.codelab.billing.sku.row;
 
 /**
- * A model for SkusAdapter's row which holds all the data to render UI
+ * A model for SKU Adapter's row which holds all the data to render UI
  */
-public class SkuRowData {
+public class Data {
+
     private final String sku, title, price, description, billingType;
 
-    public SkuRowData(String sku, String title, String price, String description, String type) {
+    public Data(String sku, String title, String price, String description, String type) {
         this.sku = sku;
         this.title = title;
         this.price = price;

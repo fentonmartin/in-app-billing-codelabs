@@ -23,7 +23,7 @@ import android.view.ViewGroup;
 import com.codelab.sample.R;
 import com.codelab.billing.BillingProvider;
 import com.codelab.billing.sku.row.RowViewHolder;
-import com.codelab.billing.sku.row.SkuRowData;
+import com.codelab.billing.sku.row.Data;
 
 import java.util.List;
 
@@ -36,14 +36,14 @@ import java.util.List;
  */
 public class SkusAdapter extends RecyclerView.Adapter<RowViewHolder>
         implements RowViewHolder.OnButtonClickListener {
-    private List<SkuRowData> mListData;
+    private List<Data> mListData;
     private BillingProvider mBillingProvider;
 
     public SkusAdapter(BillingProvider billingProvider) {
         mBillingProvider = billingProvider;
     }
 
-    void updateData(List<SkuRowData> data) {
+    void updateData(List<Data> data) {
         mListData = data;
         notifyDataSetChanged();
     }
@@ -57,7 +57,7 @@ public class SkusAdapter extends RecyclerView.Adapter<RowViewHolder>
 
     @Override
     public void onBindViewHolder(RowViewHolder holder, int position) {
-        SkuRowData data = getData(position);
+        Data data = getData(position);
         if (data != null) {
             holder.title.setText(data.getTitle());
             holder.description.setText(data.getDescription());
@@ -85,13 +85,13 @@ public class SkusAdapter extends RecyclerView.Adapter<RowViewHolder>
 
     @Override
     public void onButtonClicked(int position) {
-        SkuRowData data = getData(position);
+        Data data = getData(position);
         mBillingProvider.getBillingManager().startPurchaseFlow(data.getSku(),
                 data.getBillingType());
 
     }
 
-    private SkuRowData getData(int position) {
+    private Data getData(int position) {
         return mListData == null ? null : mListData.get(position);
     }
 }

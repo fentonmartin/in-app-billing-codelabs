@@ -34,7 +34,7 @@ import com.android.billingclient.api.SkuDetails;
 import com.android.billingclient.api.SkuDetailsResponseListener;
 import com.codelab.sample.R;
 import com.codelab.billing.BillingProvider;
-import com.codelab.billing.sku.row.SkuRowData;
+import com.codelab.billing.sku.row.Data;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,7 +116,7 @@ public class AcquireFragment extends DialogFragment {
      * Executes query for SKU details at the background thread
      */
     private void handleManagerAndUiReady() {
-        final List<SkuRowData> inList = new ArrayList<>();
+        final List<Data> inList = new ArrayList<>();
         SkuDetailsResponseListener responseListener = new SkuDetailsResponseListener() {
             @Override
             public void onSkuDetailsResponse(int responseCode,
@@ -126,7 +126,7 @@ public class AcquireFragment extends DialogFragment {
                     // Repacking the result for an adapter
                     for (SkuDetails details : skuDetailsList) {
                         Log.i(TAG, "Found sku: " + details);
-                        inList.add(new SkuRowData(details.getSku(), details.getTitle(),
+                        inList.add(new Data(details.getSku(), details.getTitle(),
                                 details.getPrice(), details.getDescription(),
                                 details.getType()));
                     }
