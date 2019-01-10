@@ -46,7 +46,7 @@ public class AcquireFragment extends DialogFragment {
     private static final String TAG = "AcquireFragment";
 
     private RecyclerView mRecyclerView;
-    private SkusAdapter mAdapter;
+    private SkuAdapter mAdapter;
     private View mLoadingView;
     private TextView mErrorTextView;
     private BillingProvider mBillingProvider;
@@ -96,7 +96,7 @@ public class AcquireFragment extends DialogFragment {
     public void onManagerReady(BillingProvider billingProvider) {
         mBillingProvider = billingProvider;
         if (mRecyclerView != null) {
-            mAdapter = new SkusAdapter(mBillingProvider);
+            mAdapter = new SkuAdapter(mBillingProvider);
             if (mRecyclerView.getAdapter() == null) {
                 mRecyclerView.setAdapter(mAdapter);
                 mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

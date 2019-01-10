@@ -20,26 +20,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.codelab.billing.sku.row.Holder;
-import com.codelab.sample.R;
 import com.codelab.billing.BillingProvider;
 import com.codelab.billing.sku.row.Data;
+import com.codelab.billing.sku.row.Holder;
+import com.codelab.sample.R;
 
 import java.util.List;
 
 /**
  * Adapter for a RecyclerView that shows SKU details for the app.
  * <p>
- *     Note: It's done fragment-specific logic independent and delegates control back to the
- *     specified handler (implemented inside AcquireFragment in this example)
+ * Note: It's done fragment-specific logic independent and delegates control back to the
+ * specified handler (implemented inside AcquireFragment in this example)
  * </p>
  */
-public class SkusAdapter extends RecyclerView.Adapter<Holder>
-        implements Holder.OnButtonClickListener {
+public class SkuAdapter extends RecyclerView.Adapter<Holder> implements Holder.OnButtonClickListener {
+
     private List<Data> mListData;
     private BillingProvider mBillingProvider;
 
-    public SkusAdapter(BillingProvider billingProvider) {
+    public SkuAdapter(BillingProvider billingProvider) {
         mBillingProvider = billingProvider;
     }
 
@@ -50,8 +50,7 @@ public class SkusAdapter extends RecyclerView.Adapter<Holder>
 
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View item = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.sku_details_row, parent, false);
+        View item = LayoutInflater.from(parent.getContext()).inflate(R.layout.sku_details_row, parent, false);
         return new Holder(item, this);
     }
 
@@ -64,17 +63,19 @@ public class SkusAdapter extends RecyclerView.Adapter<Holder>
             holder.price.setText(data.getPrice());
             holder.button.setEnabled(true);
         }
-        switch (data.getSku()) {
-            case "gas":
-                holder.skuIcon.setImageResource(R.drawable.gas_icon);
-                break;
-            case "premium":
-                holder.skuIcon.setImageResource(R.drawable.premium_icon);
-                break;
-            case "gold_monthly":
-            case "gold_yearly":
-                holder.skuIcon.setImageResource(R.drawable.gold_icon);
-                break;
+        if (data != null) {
+            switch (data.getSku()) {
+                case "gas":
+                    holder.skuIcon.setImageResource(R.drawable.gas_icon);
+                    break;
+                case "premium":
+                    holder.skuIcon.setImageResource(R.drawable.premium_icon);
+                    break;
+                case "gold_monthly":
+                case "gold_yearly":
+                    holder.skuIcon.setImageResource(R.drawable.gold_icon);
+                    break;
+            }
         }
     }
 
