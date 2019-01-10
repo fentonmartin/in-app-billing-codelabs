@@ -17,6 +17,7 @@
 package com.codelab.billing.sku;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,13 +29,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.android.billingclient.api.BillingClient.SkuType;
 import com.android.billingclient.api.BillingClient.BillingResponse;
+import com.android.billingclient.api.BillingClient.SkuType;
 import com.android.billingclient.api.SkuDetails;
 import com.android.billingclient.api.SkuDetailsResponseListener;
-import com.codelab.sample.R;
 import com.codelab.billing.BillingProvider;
 import com.codelab.billing.sku.row.Data;
+import com.codelab.sample.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,9 +43,9 @@ import java.util.List;
 /**
  * Displays a screen with various in-app purchase and subscription options
  */
-public class AcquireFragment extends DialogFragment {
-    private static final String TAG = "AcquireFragment";
+public class SkuFragment extends DialogFragment {
 
+    private static final String TAG = "SkuFragment";
     private RecyclerView mRecyclerView;
     private SkuAdapter mAdapter;
     private View mLoadingView;
@@ -58,14 +59,15 @@ public class AcquireFragment extends DialogFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.acquire_fragment, container, false);
-        mErrorTextView = (TextView) root.findViewById(R.id.error_textview);
-        mRecyclerView = (RecyclerView) root.findViewById(R.id.list);
+        mErrorTextView = root.findViewById(R.id.error_textview);
+        mRecyclerView = root.findViewById(R.id.list);
         mLoadingView = root.findViewById(R.id.screen_wait);
+
         // Setup a toolbar for this fragment
-        Toolbar toolbar = (Toolbar) root.findViewById(R.id.toolbar);
+        Toolbar toolbar = root.findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_up);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,6 +106,7 @@ public class AcquireFragment extends DialogFragment {
             handleManagerAndUiReady();
         }
     }
+
     /**
      * Enables or disables "please wait" screen.
      */
@@ -119,8 +122,7 @@ public class AcquireFragment extends DialogFragment {
         final List<Data> inList = new ArrayList<>();
         SkuDetailsResponseListener responseListener = new SkuDetailsResponseListener() {
             @Override
-            public void onSkuDetailsResponse(int responseCode,
-                    List<SkuDetails> skuDetailsList) {
+            public void onSkuDetailsResponse(int responseCode, List<SkuDetails> skuDetailsList) {
                 // If we successfully got SKUs, add a header in front of it
                 if (responseCode == BillingResponse.OK && skuDetailsList != null) {
                     // Repacking the result for an adapter
@@ -143,6 +145,7 @@ public class AcquireFragment extends DialogFragment {
         // Start querying for in-app SKUs
         List<String> skus = mBillingProvider.getBillingManager().getSkus(SkuType.INAPP);
         mBillingProvider.getBillingManager().querySkuDetailsAsync(SkuType.INAPP, skus, responseListener);
+
         // Start querying for subscriptions SKUs
         skus = mBillingProvider.getBillingManager().getSkus(SkuType.SUBS);
         mBillingProvider.getBillingManager().querySkuDetailsAsync(SkuType.SUBS, skus, responseListener);
@@ -156,8 +159,9 @@ public class AcquireFragment extends DialogFragment {
 
         mLoadingView.setVisibility(View.GONE);
         mErrorTextView.setVisibility(View.VISIBLE);
-        mErrorTextView.setText(getText(R.string.error_codelab_not_finished));
+        mErrorTextView.setText(getText(R.string.error_codelab));
 
+        Log.i(TAG, getString(R.string.error_codelab_not_finished));
         // TODO: Here you will need to handle various respond codes from BillingManager
     }
 }

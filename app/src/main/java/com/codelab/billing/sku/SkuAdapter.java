@@ -32,7 +32,7 @@ import java.util.List;
  * Adapter for a RecyclerView that shows SKU details for the app.
  * <p>
  * Note: It's done fragment-specific logic independent and delegates control back to the
- * specified handler (implemented inside AcquireFragment in this example)
+ * specified handler (implemented inside SkuFragment in this example)
  * </p>
  */
 public class SkuAdapter extends RecyclerView.Adapter<Holder> implements Holder.OnButtonClickListener {

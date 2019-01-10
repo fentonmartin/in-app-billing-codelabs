@@ -29,8 +29,8 @@ import android.widget.ImageView;
 
 import com.codelab.billing.BillingManager;
 import com.codelab.billing.BillingProvider;
+import com.codelab.billing.sku.SkuFragment;
 import com.codelab.sample.R;
-import com.codelab.billing.sku.AcquireFragment;
 
 /**
  * Example game using Play Billing library.
@@ -45,7 +45,7 @@ public class GamePlayActivity extends FragmentActivity implements BillingProvide
     private static final String DIALOG_TAG = "dialog";
 
     private BillingManager mBillingManager;
-    private AcquireFragment mAcquireFragment;
+    private SkuFragment mAcquireFragment;
     private MainViewController mViewController;
 
     private View mScreenWait, mScreenMain;
@@ -62,7 +62,7 @@ public class GamePlayActivity extends FragmentActivity implements BillingProvide
 
         // Try to restore dialog fragment if we were showing it prior to screen rotation
         if (savedInstanceState != null) {
-            mAcquireFragment = (AcquireFragment) getSupportFragmentManager()
+            mAcquireFragment = (SkuFragment) getSupportFragmentManager()
                     .findFragmentByTag(DIALOG_TAG);
         }
 
@@ -110,7 +110,7 @@ public class GamePlayActivity extends FragmentActivity implements BillingProvide
         Log.d(TAG, "Purchase button clicked.");
 
         if (mAcquireFragment == null) {
-            mAcquireFragment = new AcquireFragment();
+            mAcquireFragment = new SkuFragment();
         }
 
         if (!isAcquireFragmentShown()) {
