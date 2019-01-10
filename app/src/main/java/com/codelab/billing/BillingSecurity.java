@@ -2,7 +2,9 @@ package com.codelab.billing;
 
 import android.text.TextUtils;
 import android.util.Base64;
+
 import com.android.billingclient.util.BillingHelper;
+
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.KeyFactory;
@@ -18,8 +20,8 @@ import java.security.spec.X509EncodedKeySpec;
  * a server that communicates with the application on the device.
  */
 public class BillingSecurity {
-    private static final String TAG = "IABUtil/BillingSecurity";
 
+    private static final String TAG = "BillingSecurity";
     private static final String KEY_FACTORY_ALGORITHM = "RSA";
     private static final String SIGNATURE_ALGORITHM = "SHA1withRSA";
 
@@ -32,10 +34,8 @@ public class BillingSecurity {
      * @throws IOException if encoding algorithm is not supported or key specification
      * is invalid
      */
-    public static boolean verifyPurchase(String base64PublicKey, String signedData,
-                                         String signature) throws IOException {
-        if (TextUtils.isEmpty(signedData) || TextUtils.isEmpty(base64PublicKey)
-                || TextUtils.isEmpty(signature)) {
+    public static boolean verifyPurchase(String base64PublicKey, String signedData, String signature) throws IOException {
+        if (TextUtils.isEmpty(signedData) || TextUtils.isEmpty(base64PublicKey) || TextUtils.isEmpty(signature)) {
             BillingHelper.logWarn(TAG, "Purchase verification failed: missing data.");
             return false;
         }
