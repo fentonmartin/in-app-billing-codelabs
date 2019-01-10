@@ -19,7 +19,6 @@ package com.codelab;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.os.Looper;
-import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.annotation.UiThread;
 import android.support.v4.app.FragmentActivity;
@@ -34,7 +33,7 @@ import com.codelab.sample.R;
 
 /**
  * Example game using Play Billing library.
- *
+ * <p>
  * Please follow steps inside the codelab to understand the best practices for this new library.
  */
 public class MainActivity extends FragmentActivity implements BillingProvider {
@@ -45,8 +44,8 @@ public class MainActivity extends FragmentActivity implements BillingProvider {
     private static final String DIALOG_TAG = "dialog";
 
     private BillingManager mBillingManager;
-    private SkuFragment mAcquireFragment;
-    private MainController mViewController;
+    private SkuFragment mSkuFragment;
+    private MainController mMainController;
 
     private View mScreenWait, mScreenMain;
     private ImageView mGasImageView;
@@ -54,32 +53,28 @@ public class MainActivity extends FragmentActivity implements BillingProvider {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_game_play);
 
         // Start the controller and load game data
-        mViewController = new MainController(this);
+        mMainController = new MainController(this);
 
         // Try to restore dialog fragment if we were showing it prior to screen rotation
         if (savedInstanceState != null) {
-            mAcquireFragment = (SkuFragment) getSupportFragmentManager()
-                    .findFragmentByTag(DIALOG_TAG);
+            mSkuFragment = (SkuFragment) getSupportFragmentManager().findFragmentByTag(DIALOG_TAG);
         }
-
-        // Create and initialize BillingManager which talks to BillingLibrary
-        mBillingManager = new BillingManager(this);
+        initBilling();
 
         mScreenWait = findViewById(R.id.screen_wait);
         mScreenMain = findViewById(R.id.screen_main);
-        mGasImageView = ((ImageView) findViewById(R.id.gas_gauge));
+        mGasImageView = findViewById(R.id.gas_gauge);
 
         // Specify purchase and drive buttons listeners
-        // Note: This couldn't be done inside *.xml for Android TV since TV layout is inflated
-        // via AppCompat
+        // Note: This couldn't be done inside *.xml for Android TV since TV layout is inflated via AppCompat
         findViewById(R.id.button_purchase).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onPurchaseButtonClicked(view);
+                Log.d(TAG, "Purchase button clicked.");
+                startBilling();
             }
         });
         findViewById(R.id.button_drive).setOnClickListener(new View.OnClickListener() {
@@ -103,19 +98,22 @@ public class MainActivity extends FragmentActivity implements BillingProvider {
         return mBillingManager;
     }
 
-    /**
-     * User clicked the "Buy Gas" button - show a purchase dialog with all available SKUs
-     */
-    public void onPurchaseButtonClicked(final View arg0) {
-        Log.d(TAG, "Purchase button clicked.");
+    private void initBilling() {
+        // Create and initialize BillingManager which talks to BillingLibrary
+        mBillingManager = new BillingManager(this);
+    }
 
-        if (mAcquireFragment == null) {
-            mAcquireFragment = new SkuFragment();
+    public void startBilling() {
+        if (mSkuFragment == null) {
+            mSkuFragment = new SkuFragment();
         }
+        if (!isSkuFragmentShown()) {
+            mSkuFragment.show(getSupportFragmentManager(), DIALOG_TAG);
+        }
+    }
 
-        if (!isAcquireFragmentShown()) {
-            mAcquireFragment.show(getSupportFragmentManager(), DIALOG_TAG);
-        }
+    public boolean isSkuFragmentShown() {
+        return mSkuFragment != null && mSkuFragment.isVisible();
     }
 
     /**
@@ -124,10 +122,10 @@ public class MainActivity extends FragmentActivity implements BillingProvider {
     public void onDriveButtonClicked(View arg0) {
         Log.d(TAG, "Drive button clicked.");
 
-        if (mViewController.isTankEmpty()) {
+        if (mMainController.isTankEmpty()) {
             alert(R.string.alert_no_gas);
         } else {
-            mViewController.useGas();
+            mMainController.useGas();
             alert(R.string.alert_drove);
             updateUi();
         }
@@ -140,13 +138,14 @@ public class MainActivity extends FragmentActivity implements BillingProvider {
         setWaitScreen(false);
         updateUi();
 
-        if (isAcquireFragmentShown()) {
-            mAcquireFragment.refreshUI();
+        if (isSkuFragmentShown()) {
+            mSkuFragment.refreshUI();
         }
     }
 
     /**
      * Show an alert dialog to the user
+     *
      * @param messageId String id to display inside the alert dialog
      */
     @UiThread
@@ -156,11 +155,12 @@ public class MainActivity extends FragmentActivity implements BillingProvider {
 
     /**
      * Show an alert dialog to the user
-     * @param messageId String id to display inside the alert dialog
+     *
+     * @param messageId     String id to display inside the alert dialog
      * @param optionalParam Optional attribute for the string
      */
     @UiThread
-    void alert(@StringRes int messageId, @Nullable Object optionalParam) {
+    void alert(@StringRes int messageId, Object optionalParam) {
         if (Looper.getMainLooper().getThread() != Thread.currentThread()) {
             throw new RuntimeException("Dialog could be shown only from the main thread");
         }
@@ -173,7 +173,6 @@ public class MainActivity extends FragmentActivity implements BillingProvider {
         } else {
             bld.setMessage(getResources().getString(messageId, optionalParam));
         }
-
         bld.create().show();
     }
 
@@ -193,10 +192,6 @@ public class MainActivity extends FragmentActivity implements BillingProvider {
         Log.d(TAG, "Updating the UI. Thread: " + Thread.currentThread().getName());
 
         // Update gas gauge to reflect tank status
-        mGasImageView.setImageResource(mViewController.getTankResId());
-    }
-
-    public boolean isAcquireFragmentShown() {
-        return mAcquireFragment != null && mAcquireFragment.isVisible();
+        mGasImageView.setImageResource(mMainController.getTankResId());
     }
 }
