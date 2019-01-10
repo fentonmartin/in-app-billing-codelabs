@@ -20,9 +20,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.codelab.billing.sku.row.Holder;
 import com.codelab.sample.R;
 import com.codelab.billing.BillingProvider;
-import com.codelab.billing.sku.row.RowViewHolder;
 import com.codelab.billing.sku.row.Data;
 
 import java.util.List;
@@ -34,8 +34,8 @@ import java.util.List;
  *     specified handler (implemented inside AcquireFragment in this example)
  * </p>
  */
-public class SkusAdapter extends RecyclerView.Adapter<RowViewHolder>
-        implements RowViewHolder.OnButtonClickListener {
+public class SkusAdapter extends RecyclerView.Adapter<Holder>
+        implements Holder.OnButtonClickListener {
     private List<Data> mListData;
     private BillingProvider mBillingProvider;
 
@@ -49,14 +49,14 @@ public class SkusAdapter extends RecyclerView.Adapter<RowViewHolder>
     }
 
     @Override
-    public RowViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
         View item = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.sku_details_row, parent, false);
-        return new RowViewHolder(item, this);
+        return new Holder(item, this);
     }
 
     @Override
-    public void onBindViewHolder(RowViewHolder holder, int position) {
+    public void onBindViewHolder(Holder holder, int position) {
         Data data = getData(position);
         if (data != null) {
             holder.title.setText(data.getTitle());
