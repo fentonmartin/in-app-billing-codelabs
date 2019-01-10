@@ -50,7 +50,7 @@ public class SkuAdapter extends RecyclerView.Adapter<SkuHolder> implements SkuHo
     @NonNull
     @Override
     public SkuHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View item = LayoutInflater.from(parent.getContext()).inflate(R.layout.sku_details_row, parent, false);
+        View item = LayoutInflater.from(parent.getContext()).inflate(R.layout.sku_item, parent, false);
         return new SkuHolder(item, this);
     }
 
