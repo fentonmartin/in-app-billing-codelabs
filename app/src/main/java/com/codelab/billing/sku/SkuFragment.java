@@ -60,8 +60,8 @@ public class SkuFragment extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.acquire_fragment, container, false);
-        mErrorTextView = root.findViewById(R.id.error_textview);
+        View root = inflater.inflate(R.layout.sku_fragment, container, false);
+        mErrorTextView = root.findViewById(R.id.error_text);
         mRecyclerView = root.findViewById(R.id.list);
         mLoadingView = root.findViewById(R.id.screen_wait);
 
