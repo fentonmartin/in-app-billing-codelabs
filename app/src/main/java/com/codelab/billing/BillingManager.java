@@ -16,16 +16,15 @@
 package com.codelab.billing;
 
 import android.app.Activity;
-
-import com.android.billingclient.api.BillingFlowParams;
-import com.android.billingclient.api.PurchasesUpdatedListener;
 import android.util.Log;
 
+import com.android.billingclient.api.BillingClient;
 import com.android.billingclient.api.BillingClient.BillingResponse;
 import com.android.billingclient.api.BillingClient.SkuType;
-import com.android.billingclient.api.BillingClient;
 import com.android.billingclient.api.BillingClientStateListener;
+import com.android.billingclient.api.BillingFlowParams;
 import com.android.billingclient.api.Purchase;
+import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.android.billingclient.api.SkuDetails;
 import com.android.billingclient.api.SkuDetailsParams;
 import com.android.billingclient.api.SkuDetailsResponseListener;
@@ -34,14 +33,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * BillingManager that handles all the interactions with Play Store
- * (via Billing library), maintain connection to it through BillingClient and cache
- * temporary states/data if needed.
- */
 public class BillingManager implements PurchasesUpdatedListener {
-    private static final String TAG = "BillingManager";
 
+    private static final String TAG = "BillingManager";
     private final BillingClient mBillingClient;
     private final Activity mActivity;
 
@@ -53,8 +47,6 @@ public class BillingManager implements PurchasesUpdatedListener {
         SKUS.put(SkuType.INAPP, Arrays.asList("gas", "premium"));
         SKUS.put(SkuType.SUBS, Arrays.asList("gold_monthly", "gold_yearly"));
     }
-
-    private static final String SUBS_SKUS[] = {"gold_monthly", "gold_yearly"};
 
     public BillingManager(Activity activity) {
         mActivity = activity;
@@ -100,16 +92,13 @@ public class BillingManager implements PurchasesUpdatedListener {
         }
     }
 
-    public void querySkuDetailsAsync(@BillingClient.SkuType final String itemType,
-            final List<String> skuList, final SkuDetailsResponseListener listener) {
+    public void querySkuDetailsAsync(@BillingClient.SkuType final String itemType, final List<String> skuList, final SkuDetailsResponseListener listener) {
         // Specify a runnable to start when connection to Billing client is established
         Runnable executeOnConnectedService = new Runnable() {
             @Override
             public void run() {
-                SkuDetailsParams skuDetailsParams = SkuDetailsParams.newBuilder()
-                        .setSkusList(skuList).setType(itemType).build();
-                mBillingClient.querySkuDetailsAsync(skuDetailsParams,
-                        new SkuDetailsResponseListener() {
+                SkuDetailsParams skuDetailsParams = SkuDetailsParams.newBuilder().setSkusList(skuList).setType(itemType).build();
+                mBillingClient.querySkuDetailsAsync(skuDetailsParams, new SkuDetailsResponseListener() {
                             @Override
                             public void onSkuDetailsResponse(int responseCode,
                                     List<SkuDetails> skuDetailsList) {
