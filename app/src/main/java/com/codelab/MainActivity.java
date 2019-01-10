@@ -38,9 +38,9 @@ import com.codelab.sample.R;
  * Please follow steps inside the codelab to understand the best practices for this new library.
  */
 public class MainActivity extends FragmentActivity implements BillingProvider {
+
     // Debug tag, for logging
     private static final String TAG = "MainActivity";
-
     // Tag for a dialog that allows us to find it when screen was rotated
     private static final String DIALOG_TAG = "dialog";
 

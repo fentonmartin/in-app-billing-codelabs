@@ -25,7 +25,7 @@ import com.codelab.sample.R;
 import static android.content.Context.MODE_PRIVATE;
 
 /**
- * Handles control logic of the GamePlayActivity
+ * Handles control logic of the MainActivity
  */
 public class MainViewController {
     private static final String TAG = "MainViewController";
@@ -37,12 +37,12 @@ public class MainViewController {
     // How many units (1/4 tank is our unit) fill in the tank.
     private static final int TANK_MAX = 4;
 
-    private GamePlayActivity mActivity;
+    private MainActivity mActivity;
 
     // Current amount of gas in tank, in units
     private int mTank;
 
-    public MainViewController(GamePlayActivity activity) {
+    public MainViewController(MainActivity activity) {
         mActivity = activity;
         loadData();
     }
