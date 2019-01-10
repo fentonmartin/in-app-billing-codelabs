@@ -28,15 +28,20 @@ import static android.content.Context.MODE_PRIVATE;
  * Handles control logic of the MainActivity
  */
 public class MainViewController {
+
     private static final String TAG = "MainViewController";
 
     // Graphics for the gas gauge
-    private static int[] TANK_RES_IDS = { R.drawable.gas0, R.drawable.gas1,
-            R.drawable.gas2, R.drawable.gas3, R.drawable.gas4 };
+    private static int[] TANK_RES_IDS = {
+            R.drawable.gas0,
+            R.drawable.gas1,
+            R.drawable.gas2,
+            R.drawable.gas3,
+            R.drawable.gas4
+    };
 
     // How many units (1/4 tank is our unit) fill in the tank.
     private static final int TANK_MAX = 4;
-
     private MainActivity mActivity;
 
     // Current amount of gas in tank, in units
@@ -61,14 +66,15 @@ public class MainViewController {
         return mTank >= TANK_MAX;
     }
 
-    public @DrawableRes int getTankResId() {
+    public @DrawableRes
+    int getTankResId() {
         int index = (mTank >= TANK_RES_IDS.length) ? (TANK_RES_IDS.length - 1) : mTank;
         return TANK_RES_IDS[index];
     }
 
     /**
      * Save current tank level to disc
-     *
+     * <p>
      * Note: In a real application, we recommend you save data in a secure way to
      * prevent tampering.
      * For simplicity in this sample, we simply store the data using a
