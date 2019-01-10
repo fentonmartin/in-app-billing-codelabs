@@ -15,6 +15,7 @@
  */
 package com.codelab.billing.sku;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,14 +49,15 @@ public class SkuAdapter extends RecyclerView.Adapter<Holder> implements Holder.O
         notifyDataSetChanged();
     }
 
+    @NonNull
     @Override
-    public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View item = LayoutInflater.from(parent.getContext()).inflate(R.layout.sku_details_row, parent, false);
         return new Holder(item, this);
     }
 
     @Override
-    public void onBindViewHolder(Holder holder, int position) {
+    public void onBindViewHolder(@NonNull Holder holder, int position) {
         Data data = getData(position);
         if (data != null) {
             holder.title.setText(data.getTitle());
@@ -87,8 +89,10 @@ public class SkuAdapter extends RecyclerView.Adapter<Holder> implements Holder.O
     @Override
     public void onButtonClicked(int position) {
         Data data = getData(position);
-        mBillingProvider.getBillingManager().startPurchaseFlow(data.getSku(),
-                data.getBillingType());
+        if (data != null) {
+            mBillingProvider.getBillingManager().startPurchaseFlow(data.getSku(),
+                    data.getBillingType());
+        }
 
     }
 
@@ -96,4 +100,3 @@ public class SkuAdapter extends RecyclerView.Adapter<Holder> implements Holder.O
         return mListData == null ? null : mListData.get(position);
     }
 }
-
