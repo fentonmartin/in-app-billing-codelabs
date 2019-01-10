@@ -46,7 +46,7 @@ public class MainActivity extends FragmentActivity implements BillingProvider {
 
     private BillingManager mBillingManager;
     private SkuFragment mAcquireFragment;
-    private MainViewController mViewController;
+    private MainController mViewController;
 
     private View mScreenWait, mScreenMain;
     private ImageView mGasImageView;
@@ -58,7 +58,7 @@ public class MainActivity extends FragmentActivity implements BillingProvider {
         setContentView(R.layout.activity_game_play);
 
         // Start the controller and load game data
-        mViewController = new MainViewController(this);
+        mViewController = new MainController(this);
 
         // Try to restore dialog fragment if we were showing it prior to screen rotation
         if (savedInstanceState != null) {

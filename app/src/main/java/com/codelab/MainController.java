@@ -27,9 +27,9 @@ import static android.content.Context.MODE_PRIVATE;
 /**
  * Handles control logic of the MainActivity
  */
-public class MainViewController {
+public class MainController {
 
-    private static final String TAG = "MainViewController";
+    private static final String TAG = "MainController";
 
     // Graphics for the gas gauge
     private static int[] TANK_RES_IDS = {
@@ -47,7 +47,7 @@ public class MainViewController {
     // Current amount of gas in tank, in units
     private int mTank;
 
-    public MainViewController(MainActivity activity) {
+    public MainController(MainActivity activity) {
         mActivity = activity;
         loadData();
     }
