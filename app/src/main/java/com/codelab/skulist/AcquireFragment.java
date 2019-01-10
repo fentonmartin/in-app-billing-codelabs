@@ -28,10 +28,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.android.billingclient.api.BillingClient.SkuType;
+import com.android.billingclient.api.BillingClient.BillingResponse;
+import com.android.billingclient.api.SkuDetails;
+import com.android.billingclient.api.SkuDetailsResponseListener;
 import com.codelab.GamePlayActivity;
 import com.codelab.sample.R;
 import com.codelab.billing.BillingProvider;
+import com.codelab.skulist.row.SkuRowData;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -111,9 +117,36 @@ public class AcquireFragment extends DialogFragment {
      * Executes query for SKU details at the background thread
      */
     private void handleManagerAndUiReady() {
-        // TODO: If Billing Manager was successfully initialized - start querying for SKUs
-        // and only otherwise display an error
-        displayAnErrorIfNeeded();
+        final List<SkuRowData> inList = new ArrayList<>();
+        SkuDetailsResponseListener responseListener = new SkuDetailsResponseListener() {
+            @Override
+            public void onSkuDetailsResponse(int responseCode,
+                    List<SkuDetails> skuDetailsList) {
+                // If we successfully got SKUs, add a header in front of it
+                if (responseCode == BillingResponse.OK && skuDetailsList != null) {
+                    // Repacking the result for an adapter
+                    for (SkuDetails details : skuDetailsList) {
+                        Log.i(TAG, "Found sku: " + details);
+                        inList.add(new SkuRowData(details.getSku(), details.getTitle(),
+                                details.getPrice(), details.getDescription(),
+                                details.getType()));
+                    }
+                    if (inList.size() == 0) {
+                        displayAnErrorIfNeeded();
+                    } else {
+                        mAdapter.updateData(inList);
+                        setWaitScreen(false);
+                    }
+                }
+            }
+        };
+
+        // Start querying for in-app SKUs
+        List<String> skus = mBillingProvider.getBillingManager().getSkus(SkuType.INAPP);
+        mBillingProvider.getBillingManager().querySkuDetailsAsync(SkuType.INAPP, skus, responseListener);
+        // Start querying for subscriptions SKUs
+        skus = mBillingProvider.getBillingManager().getSkus(SkuType.SUBS);
+        mBillingProvider.getBillingManager().querySkuDetailsAsync(SkuType.SUBS, skus, responseListener);
     }
 
     private void displayAnErrorIfNeeded() {
