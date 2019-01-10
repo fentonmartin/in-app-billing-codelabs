@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.codelab.skulist;
+package com.codelab.billing.sku;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -32,10 +32,9 @@ import com.android.billingclient.api.BillingClient.SkuType;
 import com.android.billingclient.api.BillingClient.BillingResponse;
 import com.android.billingclient.api.SkuDetails;
 import com.android.billingclient.api.SkuDetailsResponseListener;
-import com.codelab.GamePlayActivity;
 import com.codelab.sample.R;
 import com.codelab.billing.BillingProvider;
-import com.codelab.skulist.row.SkuRowData;
+import com.codelab.billing.sku.row.SkuRowData;
 
 import java.util.ArrayList;
 import java.util.List;

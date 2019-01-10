@@ -13,18 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.codelab.skulist;
+package com.codelab.billing.sku;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.codelab.GamePlayActivity;
 import com.codelab.sample.R;
 import com.codelab.billing.BillingProvider;
-import com.codelab.skulist.row.RowViewHolder;
-import com.codelab.skulist.row.SkuRowData;
+import com.codelab.billing.sku.row.RowViewHolder;
+import com.codelab.billing.sku.row.SkuRowData;
 
 import java.util.List;
 

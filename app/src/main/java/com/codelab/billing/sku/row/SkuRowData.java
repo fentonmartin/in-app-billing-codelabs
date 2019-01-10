@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.codelab.skulist.row;
+package com.codelab.billing.sku.row;
 
 /**
  * A model for SkusAdapter's row which holds all the data to render UI

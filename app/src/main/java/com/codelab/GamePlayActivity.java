@@ -22,7 +22,6 @@ import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.annotation.UiThread;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
@@ -31,7 +30,7 @@ import android.widget.ImageView;
 import com.codelab.billing.BillingManager;
 import com.codelab.billing.BillingProvider;
 import com.codelab.sample.R;
-import com.codelab.skulist.AcquireFragment;
+import com.codelab.billing.sku.AcquireFragment;
 
 /**
  * Example game using Play Billing library.
