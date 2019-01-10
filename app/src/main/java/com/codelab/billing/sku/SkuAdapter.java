@@ -22,8 +22,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.codelab.billing.BillingProvider;
-import com.codelab.billing.sku.row.Data;
-import com.codelab.billing.sku.row.Holder;
 import com.codelab.sample.R;
 
 import java.util.List;
@@ -35,30 +33,30 @@ import java.util.List;
  * specified handler (implemented inside SkuFragment in this example)
  * </p>
  */
-public class SkuAdapter extends RecyclerView.Adapter<Holder> implements Holder.OnButtonClickListener {
+public class SkuAdapter extends RecyclerView.Adapter<SkuHolder> implements SkuHolder.OnButtonClickListener {
 
-    private List<Data> mListData;
+    private List<SkuData> mListData;
     private BillingProvider mBillingProvider;
 
     public SkuAdapter(BillingProvider billingProvider) {
         mBillingProvider = billingProvider;
     }
 
-    void updateData(List<Data> data) {
+    void updateData(List<SkuData> data) {
         mListData = data;
         notifyDataSetChanged();
     }
 
     @NonNull
     @Override
-    public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public SkuHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View item = LayoutInflater.from(parent.getContext()).inflate(R.layout.sku_details_row, parent, false);
-        return new Holder(item, this);
+        return new SkuHolder(item, this);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Holder holder, int position) {
-        Data data = getData(position);
+    public void onBindViewHolder(@NonNull SkuHolder holder, int position) {
+        SkuData data = getData(position);
         if (data != null) {
             holder.title.setText(data.getTitle());
             holder.description.setText(data.getDescription());
@@ -88,7 +86,7 @@ public class SkuAdapter extends RecyclerView.Adapter<Holder> implements Holder.O
 
     @Override
     public void onButtonClicked(int position) {
-        Data data = getData(position);
+        SkuData data = getData(position);
         if (data != null) {
             mBillingProvider.getBillingManager().startPurchaseFlow(data.getSku(),
                     data.getBillingType());
@@ -96,7 +94,7 @@ public class SkuAdapter extends RecyclerView.Adapter<Holder> implements Holder.O
 
     }
 
-    private Data getData(int position) {
+    private SkuData getData(int position) {
         return mListData == null ? null : mListData.get(position);
     }
 }

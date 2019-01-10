@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.codelab.billing.sku.row;
+package com.codelab.billing.sku;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -24,9 +24,9 @@ import android.widget.TextView;
 import com.codelab.sample.R;
 
 /**
- * Holder for quick access to row's views
+ * SkuHolder for quick access to row's views
  */
-public final class Holder extends RecyclerView.ViewHolder {
+public final class SkuHolder extends RecyclerView.ViewHolder {
 
     public TextView title, description, price;
     public Button button;
@@ -39,7 +39,7 @@ public final class Holder extends RecyclerView.ViewHolder {
         void onButtonClicked(int position);
     }
 
-    public Holder(final View itemView, final OnButtonClickListener clickListener) {
+    public SkuHolder(final View itemView, final OnButtonClickListener clickListener) {
         super(itemView);
         title = itemView.findViewById(R.id.title);
         price = itemView.findViewById(R.id.price);

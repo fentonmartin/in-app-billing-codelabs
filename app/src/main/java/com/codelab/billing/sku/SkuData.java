@@ -13,16 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.codelab.billing.sku.row;
+package com.codelab.billing.sku;
 
 /**
  * A model for SKU Adapter's row which holds all the data to render UI
  */
-public class Data {
+public class SkuData {
 
     private final String sku, title, price, description, billingType;
 
-    public Data(String sku, String title, String price, String description, String type) {
+    public SkuData(String sku, String title, String price, String description, String type) {
         this.sku = sku;
         this.title = title;
         this.price = price;
