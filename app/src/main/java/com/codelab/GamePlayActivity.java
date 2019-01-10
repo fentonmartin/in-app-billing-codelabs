@@ -28,13 +28,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.android.billingclient.api.Purchase;
 import com.codelab.billing.BillingManager;
 import com.codelab.billing.BillingProvider;
 import com.codelab.sample.R;
 import com.codelab.skulist.AcquireFragment;
-
-import java.util.List;
 
 /**
  * Example game using Play Billing library.
@@ -53,7 +50,6 @@ public class GamePlayActivity extends FragmentActivity implements BillingProvide
     private MainViewController mViewController;
 
     private View mScreenWait, mScreenMain;
-    //private ImageView mCarImageView;
     private ImageView mGasImageView;
 
     @Override
@@ -72,22 +68,7 @@ public class GamePlayActivity extends FragmentActivity implements BillingProvide
         }
 
         // Create and initialize BillingManager which talks to BillingLibrary
-        mBillingManager = new BillingManager(this, new BillingManager.BillingUpdatesListener() {
-            @Override
-            public void onBillingClientSetupFinished() {
-
-            }
-
-            @Override
-            public void onConsumeFinished(String token, int result) {
-
-            }
-
-            @Override
-            public void onPurchasesUpdated(List<Purchase> purchases) {
-
-            }
-        });
+        mBillingManager = new BillingManager(this);
 
         mScreenWait = findViewById(R.id.screen_wait);
         mScreenMain = findViewById(R.id.screen_main);
@@ -110,6 +91,12 @@ public class GamePlayActivity extends FragmentActivity implements BillingProvide
         });
 
         showRefreshedUi();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mBillingManager.destroy();
     }
 
     @Override
