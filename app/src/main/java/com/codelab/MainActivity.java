@@ -53,7 +53,7 @@ public class MainActivity extends FragmentActivity implements BillingProvider {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game_play);
+        setContentView(R.layout.activity_main);
 
         // Start the controller and load game data
         mMainController = new MainController(this);

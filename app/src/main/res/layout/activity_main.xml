@@ -15,10 +15,10 @@
    limitations under the License.
 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <include layout="@layout/loading_indicator"/>
+    <include layout="@layout/loading_indicator" />
 
     <LinearLayout
         android:id="@id/screen_main"
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:contentDescription="@string/content_description_title_image"
-            android:src="@drawable/title"/>
+            android:src="@drawable/title" />
 
         <ImageView
             android:id="@id/free_or_premium"
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="40dp"
             android:contentDescription="@string/content_desc_free_vs_premium_indicator"
-            android:src="@drawable/free"/>
+            android:src="@drawable/free" />
 
         <ImageView
             android:id="@id/gas_gauge"
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="40dp"
             android:contentDescription="@string/content_desc_gas_gauge_indicator"
-            android:src="@drawable/gas4"/>
+            android:src="@drawable/gas4" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -58,14 +58,16 @@
             <Button
                 android:id="@id/button_drive"
                 style="@style/DriveButtonStyle"
-                android:text="@string/button_drive"/>
+                android:text="@string/button_drive" />
 
             <Button
                 android:id="@id/button_purchase"
                 style="@style/ButtonStyle"
                 android:layout_marginTop="@dimen/double_padding"
-                android:text="@string/button_purchase"/>
+                android:text="@string/button_purchase" />
+            
         </LinearLayout>
 
     </LinearLayout>
+
 </FrameLayout>
